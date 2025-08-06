@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mininet Network Topology code1 Explain</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        .content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #f8f9ff 0%, #f0f2ff 100%);
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.4rem;
+            margin: 25px 0 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            position: relative;
+        }
+
+        .code-block::before {
+            content: "Python";
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: #667eea;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+
+        .inline-code {
+            background: #e2e8f0;
+            color: #2d3748;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .parameter-list {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border: 1px solid #e2e8f0;
+        }
+
+        .parameter-list ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .parameter-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #edf2f7;
+        }
+
+        .parameter-list li:last-child {
+            border-bottom: none;
+        }
+
+        .parameter-list strong {
+            color: #667eea;
+        }
+
+        .topology-diagram {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 20px 0;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .network-node {
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 10px;
+            text-align: center;
+            line-height: 80px;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .client { background: linear-gradient(45deg, #ff6b6b, #ee5a6f); }
+        .server { background: linear-gradient(45deg, #4ecdc4, #44a08d); }
+        .switch { background: linear-gradient(45deg, #667eea, #764ba2); }
+
+        .connection-line {
+            display: inline-block;
+            width: 60px;
+            height: 2px;
+            background: #667eea;
+            margin: 0 10px;
+            vertical-align: middle;
+        }
+
+        .toc {
+            background: linear-gradient(135deg, #f8f9ff 0%, #f0f2ff 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .toc h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .toc li {
+            padding: 5px 0;
+        }
+
+        .toc a {
+            color: #764ba2;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .toc a:hover {
+            color: #667eea;
+            text-decoration: underline;
+        }
+
+        .icon {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .error-highlight {
+            background: #fed7d7;
+            border: 1px solid #fc8181;
+            color: #c53030;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        .success-highlight {
+            background: #c6f6d5;
+            border: 1px solid #68d391;
+            color: #22543d;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header, .content {
+                padding: 20px;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .scroll-to-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌐 Mininet 네트워크 토폴로지 code1.py</h1>
+            <p>SDN(Software Defined Network) 환경 구축 기본 코드 설명</p>
+        </div>
+
+        <div class="content">
+            <div class="toc">
+                <h3>📋 목차</h3>
+                <ul>
+                    <li><a href="#libraries">1. 관련 라이브러리 설치</a></li>
+                    <li><a href="#mininet-class">2. Mininet 클래스와 net 객체</a></li>
+                    <li><a href="#add-nodes">3. 호스트 및 스위치 추가</a></li>
+                    <li><a href="#links">4. 네트워크 링크 설정</a></li>
+                    <li><a href="#ip-config">5. IP 주소 설정</a></li>
+                    <li><a href="#network-control">6. 네트워크 제어</a></li>
+                    <li><a href="#main-function">7. 메인 함수</a></li>
+                    <li><a href="#structure">8. 주요 구조 및 의존성</a></li>
+                </ul>
+            </div>
+
+            <section id="libraries" class="section">
+                <h2><span class="icon">1</span>관련 라이브러리 설치</h2>
+                <div class="code-block"><code>from mininet.net import Mininet<br>
+from mininet.cli import CLI<br>
+from mininet.node import Host<br>
+from mininet.node import OVSKernelSwitch<br>
+from mininet.log import setLogLevel, info<br>
+from mininet.node import RemoteController<br>
+from mininet.term import makeTerm</code></div>
+
+                <div class="parameter-list">
+                    <h4>각 라이브러리의 역할:</h4>
+                    <ul>
+                        <li><strong>Mininet:</strong> 전체 네트워크 토폴로지를 생성하고 관리하는 메인 클래스</li>
+                        <li><strong>CLI:</strong> 사용자가 네트워크와 상호작용할 수 있는 대화형 환경 제공</li>
+                        <li><strong>Host:</strong> 네트워크 상의 엔드포인트(클라이언트, 서버) 역할</li>
+                        <li><strong>OVSKernelSwitch:</strong> OpenFlow 프로토콜을 지원하는 가상 스위치</li>
+                        <li><strong>setLogLevel, info:</strong> 로그 출력 레벨 설정 및 정보 메시지 출력</li>
+                        <li><strong>RemoteController:</strong> 외부 SDN 컨트롤러와 연결하여 중앙집중식 네트워크 제어</li>
+                        <li><strong>makeTerm:</strong> 각 노드별로 독립적인 터미널 창을 생성</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="mininet-class" class="section">
+                <h2><span class="icon">2</span>Mininet 클래스와 net 객체</h2>
+                <div class="code-block"><code>def myTopo():<br>&emsp;
+    net = Mininet(topo=None, autoSetMacs=False, build=False, ipBase='10.0.1.0/24')</code></div>
+
+                <p>Mininet에서 사용될 Topology를 정의하는 함수</p>
+
+                <div class="parameter-list">
+                    <h4>주요 매개변수:</h4>
+                    <ul>
+                        <li><strong>topo=None:</strong> 사전 정의된 토폴로지를 사용하지 않음 (수동 구성)</li>
+                        <li><strong>autoSetMacs=False:</strong> MAC 주소 자동 할당 비활성화</li>
+                        <li><strong>build=False:</strong> 네트워크 즉시 구축하지 않음</li>
+                        <li><strong>ipBase='10.0.1.0/24':</strong> 호스트들의 기본 IP 주소 대역 설정</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="add-nodes" class="section">
+                <h2><span class="icon">3</span>호스트 및 스위치 추가</h2>
+                
+                <h3>호스트 추가</h3>
+                <div class="code-block"><code>h1 = net.addHost('client', cls=Host, defaultRoute=None)<br>
+h2 = net.addHost('server1', cls=Host, defaultRoute=None)<br>
+h3 = net.addHost('server2', cls=Host, defaultRoute=None)</code></div>
+
+                <h3>컨트롤러 및 스위치 추가</h3>
+                <div class="code-block"><code>c1 = net.addController('c1', RemoteController)<br>
+s1 = net.addSwitch('s1', protocols='OpenFlow13', failMode='standalone')</code></div>
+
+                <div class="highlight">
+                    RemoteController는 기본적으로 localhost:6633 포트로 외부 SDN 컨트롤러에 연결
+                </div>
+
+                <div class="parameter-list">
+                    <h4>함수 구조:</h4>
+                    <ul>
+                        <li><strong>addHost(name, cls, defaultRoute):</strong> 호스트 추가</li>
+                        <li><strong>addSwitch(name, protocols, failMode):</strong> 스위치 추가</li>
+                        <li><strong>failMode 옵션:</strong> 'standalone' 또는 'secure'</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="links" class="section">
+                <h2><span class="icon">4</span>네트워크 링크 설정</h2>
+                <div class="code-block"><code>net.addLink(h1, s1)<br>
+net.addLink(h2, s1)<br>
+net.addLink(h3, s1)</code></div>
+
+                <p>모든 호스트가 중앙 스위치에 연결되는 <strong>스타 토폴로지</strong>를 구성</p>
+
+                <div class="topology-diagram">
+                    <h4>네트워크 토폴로지</h4>
+                    <div>
+                        <div class="network-node client">Client<br><span style = "color:gray">h1</span></div>
+                        <div class="connection-line"></div>
+                        <div class="network-node switch">Switch<br><span style = "color:gray">s1</span></div>
+                        <div class="connection-line"></div>
+                        <div class="network-node server">Server1<br><span style = "color:gray">h2</span></div>
+                    </div>
+                    <div style="margin-top: 20px;">
+                        <div class="connection-line" style="transform: rotate(90deg);"></div>
+                    </div>
+                    <div>
+                        <div class="network-node server">Server2<br><span style = "color:gray">h3</span></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="ip-config" class="section">
+                <h2><span class="icon">5</span>IP 주소 설정</h2>
+                <div class="code-block"><code>h1.setIP(intf='client-eth0', ip='10.0.1.5/24')<br>
+h2.setIP(intf='server1-eth0', ip='10.0.1.2/24')<br>
+h3.setIP(intf='server2-eth0', ip='10.0.1.3/24')</code></div>
+
+     
+
+                <div class="parameter-list">
+                    <h4>IP 주소 할당:</h4>
+                    <ul>
+                        <li><strong>Client (h1):</strong> 10.0.1.5/24</li>
+                        <li><strong>Server1 (h2):</strong> 10.0.1.2/24</li>
+                        <li><strong>Server2 (h3):</strong> 10.0.1.3/24</li>
+                        <li><strong>서브넷 마스크:</strong> 255.255.255.0</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="network-control" class="section">
+                <h2><span class="icon">6</span>네트워크 제어</h2>
+                
+                <h3>네트워크 구축 및 시작</h3>
+                <div class="code-block"><code>net.build()<br>
+net.start()</code></div>
+
+                <h3>터미널 생성</h3>
+                <div class="code-block"><code>net.terms += makeTerm(c1)<br>
+net.terms += makeTerm(h1)<br>
+net.terms += makeTerm(h2)<br>
+net.terms += makeTerm(h3)</code></div>
+
+                <h3>CLI 실행 및 종료</h3>
+                <div class="code-block"><code>CLI(net)<br>
+net.stop()</code></div>
+
+                <div class="highlight">
+                    CLI가 실행되면 다음과 같은 테스트 명령어를 사용할 수 있음
+                    <br><code class="inline-code">mininet> h2 ping h3</code> (h2에서 h3로 ping 전송)
+                </div>
+
+                <div class="parameter-list">
+                    <h4>주요 함수 설명:</h4>
+                    <ul>
+                        <li><strong>net.build():</strong> 가상 인터페이스 생성 및 초기화</li>
+                        <li><strong>net.start():</strong> 모든 노드와 링크 활성화</li>
+                        <li><strong>makeTerm():</strong> GUI 환경에서 별도 터미널 창 생성</li>
+                        <li><strong>CLI():</strong> 대화형 네트워크 제어 인터페이스</li>
+                        <li><strong>net.stop():</strong> 네트워크 정리 및 종료</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="main-function" class="section">
+                <h2><span class="icon">7</span>메인 함수</h2>
+                <div class="code-block"><code>if __name__ == '__main__':<br>&emsp;
+    setLogLevel('info')<br>&emsp;
+    myTopo()</code></div>
+
+                <div class="parameter-list">
+                    <h4>로그 레벨 옵션:</h4>
+                    <ul>
+                        <li><strong>debug:</strong> 가장 상세한 로그 레벨, 디버깅용</li>
+                        <li><strong>info:</strong> 일반적인 정보를 제공하는 로그 레벨</li>
+                        <li><strong>output:</strong> 출력 결과를 로그로 기록</li>
+                        <li><strong>warning:</strong> 경고 메시지를 로그로 기록</li>
+                        <li><strong>error:</strong> 오류 메시지를 로그로 기록</li>
+                    </ul>
+                </div>
+
+                <div class="success-highlight">
+                    <strong>실행 결과:</strong> 리눅스 기반 운영체제에서 실행 시 Mininet CLI가 활성화되며 네트워크 명령을 통해 네트워크 제어 및 테스트 가능
+                </div>
+            </section>
+
+            <section id="structure" class="section">
+                <h2><span class="icon">8</span>주요 구조 및 의존성</h2>
+                
+                <h3>주요 구조</h3>
+                <div class="parameter-list">
+                    <ul>
+                        <li><strong>Library Import:</strong> Mininet 핵심 모듈들</li>
+                        <li><strong>Network 생성:</strong> 호스트 3개 + 스위치 1개 + 컨트롤러 1개</li>
+                        <li><strong>Topology:</strong> 스타 구조 (모든 호스트가 중앙 스위치에 연결)</li>
+                        <li><strong>설정:</strong> 수동 MAC/IP 주소 할당</li>
+                        <li><strong>제어:</strong> CLI를 통한 대화형 네트워크 제어</li>
+                    </ul>
+                </div>
+
+                <h3>주요 의존성</h3>
+                <div class="parameter-list">
+                    <ul>
+                        <li><strong>Open vSwitch:</strong> 가상 스위치 구현</li>
+                        <li><strong>Python:</strong> 스크립팅 환경</li>
+                        <li><strong>Linux Network Namespace:</strong> 네트워크 격리</li>
+                        <li><strong>iptables:</strong> 방화벽 및 NAT 기능</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <button class="scroll-to-top" onclick="scrollToTop()">↑</button>
+
+    <script>
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Smooth scrolling for TOC links
+        document.querySelectorAll('.toc a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        });
+
+        // Show/hide scroll to top button
+        window.addEventListener('scroll', function() {
+            const scrollButton = document.querySelector('.scroll-to-top');
+            if (window.pageYOffset > 300) {
+                scrollButton.style.display = 'block';
+            } else {
+                scrollButton.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

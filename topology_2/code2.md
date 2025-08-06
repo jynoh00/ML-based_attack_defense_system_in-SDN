@@ -1,5 +1,3 @@
-# Recent .md
-
 # Enhanced Mininet Topology Code Explain (code2.py)
 ## 20203009 JY_NOH
 
