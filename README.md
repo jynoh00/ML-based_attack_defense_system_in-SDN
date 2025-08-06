@@ -46,9 +46,9 @@
     monitor = net.addHost('monitor', cls=Host, ip='10.0.1.250/24', defaultRoute=None)
 ```
 > 네트워크 내 호스트 생성부<br>
-&emsp;client0~2: 클라이언트 호스트<br>
+&emsp;client0-2: 클라이언트 호스트<br>
 &emsp;web, db, dns_server: 서버 호스트<br>
-&emsp;attacker0~1: 공격자 호스트<br>
+&emsp;attacker0-1: 공격자 호스트<br>
 &emsp;monitor: 총괄 모니터링 호스트<br>
 <br>
 
@@ -62,9 +62,9 @@
 ```
 > 스위치 및 각 호스트 간 링크 생성부<br>
 &emsp;100Mbps 대역폭 사용, s0가 s1, s2와 링크되어 중앙 core 역할<br>
-&emsp;10Mbps 대역폭 사용, s1에 client0~2의 호스트가 링크<br>
+&emsp;10Mbps 대역폭 사용, s1에 client0-2의 호스트가 링크<br>
 &emsp;50, 20Mbps 대역폭 사용, s2에 web-db-dns_server 링크<br>
-&emsp;20Mbps 대역폭으로, attacker0~1 s0 링크<br>
+&emsp;20Mbps 대역폭으로, attacker0-1 s0 링크<br>
 <br>
 
 5. MAC address setting
