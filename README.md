@@ -21,11 +21,12 @@
 
 ### 해결하고자 하는 문제
 
-- **DDoS 공격**: 대용량 트래픽을 통한 서비스 거부 공격
+- **DDoS Attack**: 대용량 트래픽을 통한 서비스 거부 공격
 - **Flow Table Overflow**: 플로우 테이블 포화 공격
 - **Controller Hijacking**: 컨트롤러 탈취 시도
 - **Topology Poisoning**: 네트워크 토폴로지 조작
 - **Man-in-the-Middle**: 중간자 공격
+- etc.
 
 ## 시스템 아키텍처
 
@@ -67,7 +68,7 @@ graph TB
 
 ## 기술 스택
 
-###� Python (ML Engine & SDN Controller)
+### Python (ML Engine & SDN Controller)
 ```python
 # 주요 라이브러리
 - TensorFlow / PyTorch  # 딥러닝 모델
