@@ -1,9 +1,8 @@
-# ML-based SDN Attack Defense System in SDN
+# 🛡️ ML-based SDN Attack Defense System in SDN
 
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-16+-green.svg)](https://nodejs.org/)
 [![C++](https://img.shields.io/badge/C++-17-red.svg)](https://isocpp.org/)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 > **머신러닝 기반의 SDN 네트워크 공격 방어 시스템**  
 > Software Defined Networking 환경에서 실시간 위협 탐지 및 자동화된 보안 대응을 제공하는 시스템 개발
@@ -19,7 +18,6 @@
 - [시연 영상](#-시연-영상)
 - [프로젝트 구조](#-프로젝트-구조)
 - [API 문서](#-api-문서)
-- [기여하기](#-기여하기)
 - [라이센스](#-라이센스)
 
 ## 🎯 프로젝트 개요
@@ -268,51 +266,3 @@ POST   /api/scenarios/simulate      # 공격 시나리오 시뮬레이션
 - **탐지 지연시간**: < 50ms (평균)
 - **방어 응답시간**: < 200ms (평균)
 - **메모리 사용량**: < 2GB (전체 시스템)
-
-## 🤝 기여하기
-
-프로젝트 개선에 참여해주세요! 
-
-### 🔧 개발 환경 설정
-1. Fork 및 Clone
-2. 새 브랜치 생성: `git checkout -b feature/amazing-feature`
-3. 변경사항 커밋: `git commit -m 'Add amazing feature'`
-4. 브랜치에 Push: `git push origin feature/amazing-feature`
-5. Pull Request 생성
-
-### 📝 코딩 컨벤션
-- **Python**: PEP 8 준수, Black 포매터 사용
-- **JavaScript**: ESLint + Prettier 설정
-- **C++**: Google C++ Style Guide 준수
-
-## 👥 팀 정보
-
-| 역할 | 이름 | 담당 업무 |
-|------|------|-----------|
-| 팀장 | 김OO | 전체 아키텍처 설계, Python ML 엔진 |
-| 개발자 | 이OO | Node.js 웹 대시보드, 시각화 |
-| 개발자 | 박OO | C++ 패킷 분석기, 성능 최적화 |
-| 개발자 | 최OO | SDN 컨트롤러, 네트워크 보안 |
-
-## 📄 라이센스
-
-이 프로젝트는 MIT 라이센스 하에 배포됩니다. 자세한 내용은 [LICENSE](LICENSE) 파일을 참조하세요.
-
-## 📞 문의
-
-프로젝트에 대한 질문이나 제안사항이 있으시면 언제든 연락해주세요!
-
-- 📧 Email: your.email@university.edu
-- 🐙 GitHub: [프로젝트 저장소](https://github.com/yourusername/sdn-ml-security)
-- 📚 Wiki: [프로젝트 위키](https://github.com/yourusername/sdn-ml-security/wiki)
-
----
-
-<div align="center">
-
-**🛡️ Making SDN Networks Safer with AI 🛡️**
-
-[![Star this repo](https://img.shields.io/github/stars/yourusername/sdn-ml-security?style=social)](https://github.com/yourusername/sdn-ml-security)
-[![Fork this repo](https://img.shields.io/github/forks/yourusername/sdn-ml-security?style=social)](https://github.com/yourusername/sdn-ml-security/fork)
-
-</div>
