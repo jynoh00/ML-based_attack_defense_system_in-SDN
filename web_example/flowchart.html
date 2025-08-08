@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML-Based Network Security System Architecture</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: auto;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #00d4ff, #5a67d8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #a0aec0;
+            margin-bottom: 40px;
+        }
+
+        .flowchart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            position: relative;
+        }
+
+        .step {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            width: 400px;
+            position: relative;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 212, 255, 0.2);
+            border-color: rgba(0, 212, 255, 0.3);
+        }
+
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .step-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #00d4ff;
+        }
+
+        .step-description {
+            color: #e2e8f0;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .tech-tag {
+            background: rgba(0, 212, 255, 0.2);
+            color: #00d4ff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .python { background: rgba(56, 178, 172, 0.2); color: #38b2ac; border-color: rgba(56, 178, 172, 0.3); }
+        .nodejs { background: rgba(104, 211, 145, 0.2); color: #68d391; border-color: rgba(104, 211, 145, 0.3); }
+        .cpp { background: rgba(237, 100, 166, 0.2); color: #ed64a6; border-color: rgba(237, 100, 166, 0.3); }
+        .json { background: rgba(251, 211, 141, 0.2); color: #fbd38d; border-color: rgba(251, 211, 141, 0.3); }
+
+        .arrow {
+            width: 2px;
+            height: 40px;
+            background: linear-gradient(to bottom, #00d4ff, #5a67d8);
+            position: relative;
+            margin: 10px 0;
+        }
+
+        .arrow::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: -6px;
+            width: 0;
+            height: 0;
+            border-left: 7px solid transparent;
+            border-right: 7px solid transparent;
+            border-top: 12px solid #5a67d8;
+        }
+
+        .parallel-container {
+            display: flex;
+            gap: 50px;
+            align-items: flex-start;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .parallel-step {
+            width: 350px;
+        }
+
+        .merge-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .merge-line {
+            width: 200px;
+            height: 2px;
+            background: linear-gradient(to right, #00d4ff, #5a67d8);
+            position: relative;
+        }
+
+        .merge-line::after {
+            content: '';
+            position: absolute;
+            right: -8px;
+            top: -6px;
+            width: 0;
+            height: 0;
+            border-left: 12px solid #5a67d8;
+            border-top: 7px solid transparent;
+            border-bottom: 7px solid transparent;
+        }
+
+        .data-flow {
+            position: absolute;
+            right: -120px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            color: #fbd38d;
+            border: 1px solid rgba(251, 211, 141, 0.3);
+            white-space: nowrap;
+        }
+
+        @media (max-width: 1200px) {
+            .parallel-container {
+                flex-direction: column;
+                gap: 30px;
+                align-items: center;
+            }
+            
+            .parallel-step {
+                width: 400px;
+            }
+            
+            .data-flow {
+                position: static;
+                transform: none;
+                margin-top: 10px;
+                align-self: flex-end;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .step, .parallel-step {
+                width: 100%;
+                max-width: 350px;
+            }
+            
+            .title {
+                font-size: 2rem;
+            }
+        }
+
+        .highlight-box {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .highlight-title {
+            color: #00d4ff;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">ML-Based Network Security System</h1>
+        <p class="subtitle">머신러닝 기반 네트워크 공격 방어 시스템 아키텍처</p>
+        
+        <div class="flowchart">
+            <!-- Step 1 -->
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-title">머신러닝 학습 모델</div>
+                <div class="step-description">
+                    다양한 네트워크 공격 데이터를 활용하여 머신러닝 모델을 학습시키고, 
+                    학습된 모델을 기반으로 공격 탐지 및 방어 시스템을 구축합니다.
+                </div>
+                <div class="tech-stack">
+                    <span class="tech-tag python">Python</span>
+                    <span class="tech-tag">TensorFlow/PyTorch</span>
+                    <span class="tech-tag">Scikit-learn</span>
+                </div>
+                <div class="highlight-box">
+                    <div class="highlight-title">주요 기능</div>
+                    <div>• 네트워크 트래픽 패턴 분석<br>• 이상 탐지 알고리즘<br>• 공격 유형 분류</div>
+                </div>
+            </div>
+
+            <div class="arrow"></div>
+
+            <!-- Step 2 -->
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-title">웹 인터페이스</div>
+                <div class="step-description">
+                    공격 시나리오 선택 및 SDN 자동방어 옵션을 제공하는 웹 인터페이스를 통해 
+                    사용자가 시뮬레이션을 제어하고 공격을 시작할 수 있습니다.
+                </div>
+                <div class="tech-stack">
+                    <span class="tech-tag nodejs">Node.js</span>
+                    <span class="tech-tag">Express.js</span>
+                    <span class="tech-tag">React/Vue.js</span>
+                </div>
+                <div class="data-flow">JSON 데이터 전송</div>
+                <div class="highlight-box">
+                    <div class="highlight-title">제공 기능</div>
+                    <div>• 공격 시나리오 선택<br>• SDN 방어 설정<br>• 실시간 모니터링</div>
+                </div>
+            </div>
+
+            <div class="arrow"></div>
+
+            <!-- Parallel Steps 3 & 4 -->
+            <div class="parallel-container">
+                <div class="step parallel-step">
+                    <div class="step-number">3</div>
+                    <div class="step-title">네트워크 시뮬레이션</div>
+                    <div class="step-description">
+                        웹에서 전송받은 JSON 데이터를 기반으로 Mininet을 활용하여 
+                        실제 네트워크 환경을 시뮬레이션합니다.
+                    </div>
+                    <div class="tech-stack">
+                        <span class="tech-tag python">Python</span>
+                        <span class="tech-tag">Mininet</span>
+                        <span class="tech-tag">OpenFlow</span>
+                    </div>
+                    <div class="highlight-box">
+                        <div class="highlight-title">시뮬레이션 환경</div>
+                        <div>• 가상 네트워크 토폴로지<br>• SDN 컨트롤러 연동<br>• 트래픽 생성 및 분석</div>
+                    </div>
+                </div>
+
+                <div class="step parallel-step">
+                    <div class="step-number">4</div>
+                    <div class="step-title">고성능 패킷 처리</div>
+                    <div class="step-description">
+                        성능이 중요한 패킷 파싱과 커널 레벨 모듈을 C/C++로 구현하여 
+                        실시간 고속 패킷 처리를 담당합니다.
+                    </div>
+                    <div class="tech-stack">
+                        <span class="tech-tag cpp">C/C++</span>
+                        <span class="tech-tag">DPDK</span>
+                        <span class="tech-tag">eBPF</span>
+                    </div>
+                    <div class="highlight-box">
+                        <div class="highlight-title">최적화 영역</div>
+                        <div>• 빠른 패킷 파싱<br>• 커널 레벨 필터링<br>• 하드웨어 가속</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="merge-arrow">
+                <div class="merge-line"></div>
+            </div>
+
+            <!-- Step 5 -->
+            <div class="step">
+                <div class="step-number">5</div>
+                <div class="step-title">결과 데이터 처리</div>
+                <div class="step-description">
+                    시뮬레이션과 패킷 처리 결과를 JSON 형태로 통합하여 
+                    웹 인터페이스로 전송할 수 있는 형태로 가공합니다.
+                </div>
+                <div class="tech-stack">
+                    <span class="tech-tag python">Python</span>
+                    <span class="tech-tag json">JSON</span>
+                    <span class="tech-tag">REST API</span>
+                </div>
+                <div class="data-flow">결과 JSON 출력</div>
+                <div class="highlight-box">
+                    <div class="highlight-title">출력 데이터</div>
+                    <div>• 공격 탐지 결과<br>• 네트워크 성능 메트릭<br>• 방어 효과 분석</div>
+                </div>
+            </div>
+
+            <div class="arrow"></div>
+
+            <!-- Step 6 -->
+            <div class="step">
+                <div class="step-number">6</div>
+                <div class="step-title">웹 UI 시각화</div>
+                <div class="step-description">
+                    처리된 결과 JSON 데이터를 받아와서 직관적이고 전문적인 
+                    웹 UI를 통해 사용자에게 시각화하여 제공합니다.
+                </div>
+                <div class="tech-stack">
+                    <span class="tech-tag nodejs">Node.js</span>
+                    <span class="tech-tag">Chart.js/D3.js</span>
+                    <span class="tech-tag">WebSocket</span>
+                </div>
+                <div class="highlight-box">
+                    <div class="highlight-title">시각화 요소</div>
+                    <div>• 실시간 대시보드<br>• 공격 패턴 그래프<br>• 네트워크 토폴로지 뷰</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 호버 효과 강화
+        document.querySelectorAll('.step').forEach(step => {
+            step.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.02)';
+            });
+            
+            step.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // 스크롤 애니메이션
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // 초기 상태 설정 및 관찰 시작
+        document.querySelectorAll('.step').forEach((step, index) => {
+            step.style.opacity = '0';
+            step.style.transform = 'translateY(30px)';
+            step.style.transition = `all 0.6s ease ${index * 0.1}s`;
+            observer.observe(step);
+        });
+    </script>
+</body>
+</html>

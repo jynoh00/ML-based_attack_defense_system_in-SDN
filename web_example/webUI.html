@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDN 네트워크 공격 방어 시스템</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0e1a;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(120, 219, 255, 0.1) 0%, transparent 50%);
+            min-height: 100vh;
+            color: #e2e8f0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #00d4ff, #7c3aed, #e879f9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .header p {
+            color: #94a3b8;
+            font-size: 1.1em;
+            font-weight: 300;
+        }
+
+        .control-panel {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .control-section {
+            margin-bottom: 25px;
+        }
+
+        .control-section h3 {
+            margin-bottom: 18px;
+            color: #f1f5f9;
+            font-size: 1.1em;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            background: rgba(30, 41, 59, 0.6);
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: 0.95em;
+        }
+
+        .checkbox-item:hover {
+            border-color: #00d4ff;
+            background: rgba(0, 212, 255, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            margin-right: 10px;
+            width: 16px;
+            height: 16px;
+            accent-color: #00d4ff;
+        }
+
+        .start-button {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            font-size: 1em;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(239, 68, 68, 0.3);
+        }
+
+        .start-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
+            background: linear-gradient(135deg, #f87171, #ef4444);
+        }
+
+        .start-button:disabled {
+            background: linear-gradient(135deg, #374151, #4b5563);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .visualization {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 16px;
+            padding: 30px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .visualization h3 {
+            margin-bottom: 25px;
+            color: #f1f5f9;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        .network-diagram {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 30px;
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .node {
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.8em;
+            color: white;
+            position: relative;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .controller {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        }
+
+        .switch {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        .host {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+
+        .attacker {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+        }
+
+        .connection {
+            position: absolute;
+            height: 2px;
+            background: rgba(148, 163, 184, 0.3);
+            top: 50%;
+            transform: translateY(-50%);
+            transition: all 0.3s ease;
+        }
+
+        .connection.active {
+            background: linear-gradient(90deg, #10b981, #059669);
+            height: 3px;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+        }
+
+        .connection.attack {
+            background: linear-gradient(90deg, #ef4444, #dc2626);
+            height: 3px;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.8);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: translateY(-50%) scaleY(1); }
+            50% { opacity: 0.6; transform: translateY(-50%) scaleY(1.5); }
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .stat-card {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            padding: 24px;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(0, 212, 255, 0.3);
+        }
+
+        .stat-value {
+            font-size: 2.2em;
+            font-weight: 700;
+            color: #00d4ff;
+            margin-bottom: 8px;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+        }
+
+        .stat-label {
+            color: #94a3b8;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+
+        .log {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 12px;
+            height: 220px;
+            overflow-y: auto;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 0.85em;
+            margin-top: 25px;
+        }
+
+        .log::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .log::-webkit-scrollbar-track {
+            background: rgba(30, 41, 59, 0.3);
+            border-radius: 3px;
+        }
+
+        .log::-webkit-scrollbar-thumb {
+            background: rgba(148, 163, 184, 0.3);
+            border-radius: 3px;
+        }
+
+        .log-entry {
+            margin-bottom: 6px;
+            padding: 3px 0;
+            line-height: 1.4;
+        }
+
+        .log-info { color: #22d3ee; }
+        .log-warning { color: #fbbf24; }
+        .log-error { color: #f87171; }
+
+        .status-indicator {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 2px solid rgba(15, 23, 42, 0.8);
+        }
+
+        .status-safe { 
+            background: #10b981;
+            box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+        }
+        .status-warning { 
+            background: #f59e0b;
+            box-shadow: 0 0 8px rgba(245, 158, 11, 0.6);
+        }
+        .status-danger { 
+            background: #ef4444;
+            box-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.4; }
+        }
+
+        @media (max-width: 768px) {
+            .network-diagram {
+                flex-direction: column;
+                gap: 25px;
+                padding: 20px;
+            }
+            
+            .connection {
+                display: none;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .stats {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🛡️ SDN 네트워크 공격 방어 시스템</h1>
+            <p>머신러닝 기반 실시간 보안 모니터링 및 자동 방어</p>
+        </div>
+
+        <div class="control-panel">
+            <div class="control-section">
+                <h3>공격 시나리오 선택</h3>
+                <div class="checkbox-group">
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="ddos" value="ddos">
+                        <span>DDoS 공격</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="port-scan" value="port-scan">
+                        <span>포트 스캔</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="mitm" value="mitm">
+                        <span>중간자 공격</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="flow-table" value="flow-table">
+                        <span>플로우 테이블 오버플로우</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="control-section">
+                <h3>SDN 자동 방어 적용</h3>
+                <div class="checkbox-group">
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="ml-detection" value="ml-detection" checked>
+                        <span>머신러닝 이상 탐지</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="auto-block" value="auto-block" checked>
+                        <span>자동 IP 차단</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="flow-control" value="flow-control" checked>
+                        <span>플로우 규칙 동적 조정</span>
+                    </label>
+                </div>
+            </div>
+
+            <button class="start-button" onclick="startAttackSimulation()">
+                공격 시뮬레이션 시작
+            </button>
+        </div>
+
+        <div class="visualization">
+            <h3>네트워크 토폴로지 및 실시간 상태</h3>
+            
+            <div class="network-diagram">
+                <div class="node controller" id="controller">
+                    <span>SDN<br>Controller</span>
+                    <div class="status-indicator status-safe"></div>
+                </div>
+                
+                <div class="connection" id="conn1" style="left: 90px; width: 200px;"></div>
+                
+                <div class="node switch" id="switch1">
+                    <span>Switch<br>1</span>
+                    <div class="status-indicator status-safe"></div>
+                </div>
+                
+                <div class="connection" id="conn2" style="left: 370px; width: 150px;"></div>
+                
+                <div class="node switch" id="switch2">
+                    <span>Switch<br>2</span>
+                    <div class="status-indicator status-safe"></div>
+                </div>
+                
+                <div class="connection" id="conn3" style="left: 600px; width: 200px;"></div>
+                
+                <div class="node host" id="host">
+                    <span>Host</span>
+                    <div class="status-indicator status-safe"></div>
+                </div>
+                
+                <div class="node attacker" id="attacker" style="position: absolute; bottom: 20px; right: 20px;">
+                    <span>Attacker</span>
+                    <div class="status-indicator status-safe"></div>
+                </div>
+            </div>
+
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-value" id="traffic-volume">0</div>
+                    <div class="stat-label">트래픽 볼륨 (Mbps)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="attack-detected">0</div>
+                    <div class="stat-label">탐지된 공격</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="blocked-ips">0</div>
+                    <div class="stat-label">차단된 IP</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="response-time">0</div>
+                    <div class="stat-label">응답시간 (ms)</div>
+                </div>
+            </div>
+
+            <div class="log" id="log">
+                <div class="log-entry log-info">[INFO] SDN 컨트롤러 초기화 완료</div>
+                <div class="log-entry log-info">[INFO] 머신러닝 모델 로드 완료</div>
+                <div class="log-entry log-info">[INFO] 네트워크 토폴로지 스캔 완료</div>
+                <div class="log-entry log-info">[INFO] 시스템 준비 완료 - 공격 시뮬레이션 대기중</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let simulationActive = false;
+        let attackCounter = 0;
+        let blockedIPs = 0;
+        let currentTraffic = 0;
+
+        function addLog(message, type = 'info') {
+            const log = document.getElementById('log');
+            const entry = document.createElement('div');
+            entry.className = `log-entry log-${type}`;
+            entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            log.appendChild(entry);
+            log.scrollTop = log.scrollHeight;
+        }
+
+        function updateStats() {
+            document.getElementById('traffic-volume').textContent = currentTraffic;
+            document.getElementById('attack-detected').textContent = attackCounter;
+            document.getElementById('blocked-ips').textContent = blockedIPs;
+            document.getElementById('response-time').textContent = Math.floor(Math.random() * 50 + 10);
+        }
+
+        function setNodeStatus(nodeId, status) {
+            const node = document.getElementById(nodeId);
+            const indicator = node.querySelector('.status-indicator');
+            indicator.className = `status-indicator status-${status}`;
+        }
+
+        function setConnectionStatus(connId, status) {
+            const conn = document.getElementById(connId);
+            conn.className = `connection ${status}`;
+        }
+
+        function simulateAttack(attackType) {
+            addLog(`${attackType} 공격 감지됨!`, 'warning');
+            setNodeStatus('attacker', 'danger');
+            setConnectionStatus('conn3', 'attack');
+            
+            // 트래픽 증가
+            currentTraffic = Math.floor(Math.random() * 500 + 100);
+            attackCounter++;
+            
+            // 머신러닝 탐지 시뮬레이션
+            setTimeout(() => {
+                if (document.getElementById('ml-detection').checked) {
+                    addLog('머신러닝 모델이 이상 패턴 탐지', 'warning');
+                    
+                    setTimeout(() => {
+                        if (document.getElementById('auto-block').checked) {
+                            addLog('자동 IP 차단 규칙 적용', 'info');
+                            blockedIPs++;
+                            setNodeStatus('attacker', 'warning');
+                        }
+                        
+                        if (document.getElementById('flow-control').checked) {
+                            addLog('플로우 테이블 동적 조정 완료', 'info');
+                            setConnectionStatus('conn3', 'active');
+                        }
+                        
+                        setTimeout(() => {
+                            addLog('공격 차단 완료 - 네트워크 정상화', 'info');
+                            setNodeStatus('attacker', 'safe');
+                            setConnectionStatus('conn3', '');
+                            currentTraffic = Math.floor(Math.random() * 50 + 10);
+                        }, 2000);
+                    }, 1500);
+                }
+            }, 1000);
+        }
+
+        function startAttackSimulation() {
+            if (simulationActive) return;
+            
+            const selectedAttacks = [];
+            const attackTypes = ['ddos', 'port-scan', 'mitm', 'flow-table'];
+            const attackNames = {
+                'ddos': 'DDoS',
+                'port-scan': '포트 스캔',
+                'mitm': '중간자',
+                'flow-table': '플로우 테이블 오버플로우'
+            };
+            
+            attackTypes.forEach(type => {
+                if (document.getElementById(type).checked) {
+                    selectedAttacks.push(attackNames[type]);
+                }
+            });
+            
+            if (selectedAttacks.length === 0) {
+                alert('최소 하나의 공격 시나리오를 선택해주세요.');
+                return;
+            }
+            
+            simulationActive = true;
+            document.querySelector('.start-button').disabled = true;
+            document.querySelector('.start-button').textContent = '시뮬레이션 실행중...';
+            
+            addLog('공격 시뮬레이션 시작', 'info');
+            
+            // 초기 네트워크 활성화
+            setConnectionStatus('conn1', 'active');
+            setConnectionStatus('conn2', 'active');
+            
+            let attackIndex = 0;
+            const attackInterval = setInterval(() => {
+                if (attackIndex < selectedAttacks.length) {
+                    simulateAttack(selectedAttacks[attackIndex]);
+                    attackIndex++;
+                } else {
+                    clearInterval(attackInterval);
+                    setTimeout(() => {
+                        addLog('모든 공격 시뮬레이션 완료', 'info');
+                        simulationActive = false;
+                        document.querySelector('.start-button').disabled = false;
+                        document.querySelector('.start-button').textContent = '공격 시뮬레이션 시작';
+                    }, 3000);
+                }
+                updateStats();
+            }, 5000);
+        }
+
+        // 초기 상태 업데이트
+        setInterval(updateStats, 1000);
+    </script>
+</body>
+</html>
