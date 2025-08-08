@@ -1,4 +1,4 @@
-# 🛡️ ML-based SDN Attack Defense System in SDN
+# ML-based SDN Attack Defense System in SDN
 
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-16+-green.svg)](https://nodejs.org/)
