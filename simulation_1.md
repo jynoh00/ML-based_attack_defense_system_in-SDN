@@ -1,7 +1,7 @@
 # simulation-1
-simulator : /attack_simulator/code1.py
-controller: /ryu_controller/code1.py
-topology: /topology/topology_2/code2.py
+- simulator : /attack_simulator/code1.py
+- controller: /ryu_controller/code1.py
+- topology: /topology/topology_2/code2.py
 
 # 의존성 패키지 설치
 ```bash
@@ -34,10 +34,10 @@ ryu-manager controller --verbose
 sudo python3 topology
 ```
 controller: port 6653, OpenFlow 연결 대기<br>
-topology: 
-&emsp;클라이언트: client0(10.0.1.10), client1(10.0.1.11), client2(10.0.1.12)
-&emsp;서버: web_server(10.0.1.100), db_server(10.0.1.101), dns_server(10.0.1.102)
-&emsp;공격자: attacker0(10.0.1.200), attacker1(10.0.1.201)
+topology:<br>
+&emsp;클라이언트: client0(10.0.1.10), client1(10.0.1.11), client2(10.0.1.12)<br>
+&emsp;서버: web_server(10.0.1.100), db_server(10.0.1.101), dns_server(10.0.1.102)<br>
+&emsp;공격자: attacker0(10.0.1.200), attacker1(10.0.1.201)<br>
 &emsp;모니터: monitor(10.0.1.250)
 
 # 네트워크 연결 상태 확인 (Mininet CLI)
