@@ -11,6 +11,9 @@
 [![chrono](https://img.shields.io/badge/chrono-C++17-brightgreen.svg)](https://en.cppreference.com/w/cpp/chrono)
 [![mutex](https://img.shields.io/badge/mutex-C++17-purple.svg)](https://en.cppreference.com/w/cpp/thread/mutex)
 [![thread](https://img.shields.io/badge/thread-C++17-blueviolet.svg)](https://en.cppreference.com/w/cpp/thread)
+[![atomic](https://img.shields.io/badge/atomic-C++17-darkgreen.svg)](https://en.cppreference.com/w/cpp/atomic)
+[![memory](https://img.shields.io/badge/memory-C++17-lightgreen.svg)](https://en.cppreference.com/w/cpp/memory)
+[![iomanip](https://img.shields.io/badge/iomanip-C++17-orange.svg)](https://en.cppreference.com/w/cpp/io/manip)
 [![Mininet](https://img.shields.io/badge/Mininet-2.3.0-brightgreen.svg)](http://mininet.org/)
 [![Ryu](https://img.shields.io/badge/Ryu-SDN-orange.svg)](https://osrg.github.io/ryu/)
 
