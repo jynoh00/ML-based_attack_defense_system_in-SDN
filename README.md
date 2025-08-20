@@ -77,6 +77,11 @@ graph TB
 - Mininet              # 네트워크 가상화
 - Pandas, NumPy        # 데이터 처리
 - Scapy               # 패킷 분석
+- subprocess
+- threading
+- socket
+- Ryu
+- 
 ```
 
 ### Node.js (Web Dashboard)
@@ -88,6 +93,11 @@ graph TB
 - Three.js          // 3D 네트워크 토폴로지
 - Chart.js          // 차트 및 그래프
 - Bootstrap        // UI 프레임워크
+- cookie-parser
+- body-parser
+- debug
+- ejs
+- morgan
 ```
 
 ### C++ (High-Performance Packet Processing)
@@ -98,5 +108,10 @@ graph TB
 - OpenMP           // 병렬 처리
 - Protocol Buffers // 데이터 직렬화
 - dpdk            // 고속 패킷 처리 (옵션)
+- memory
+- chrono
+- netinet/ip, tcp, if_ether.h
+- arpa/inet.h
+- iomanip
 ```
 
