@@ -20,3 +20,5 @@ router.get('/webUI', (req, res) => {
     console.log('more.js Router running : webUI.ejs render');
     res.render('webUI');
 });
+
+module.exports = router;
