@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang = "ko">
+    <head>
+        <meta charset = "UTF-8">
+        <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
+        <title>Background Knowledge - ML-based Network Security System</title>
+        <link rel = "stylesheet" href = "/css/bg_style.css">
+        <link rel = "stylesheet" href = "/fonts/font1_style.css">
+    </head>
+    <body>
+        <div class = "container">
+            <div class = "header">
+                <h1>배경지식</h1>
+                <p>Background Knowledge</p>
+                <p>머신러닝 기반 네트워크 보안 시스템을 위한 핵심 개념들</p>
+            </div>
+
+            <div class = "section" id = "machine-learning">
+                <h2 class = "section-title">1. 머신러닝 (Machine Learning)</h2>
+                
+                <div class = "subsection">
+                    <h3 class = "subsection-title">머신러닝 등장 배경</h3>
+                    <div class = "content-block">
+                        <p>과거 인공지능 개발 시 전문가들이 만든 대량의 샘플을 데이터베이스화하여 수작업으로 컴퓨터에 등록하는 방법을 사용했습니다. 이는 많은 시간, 노력, 비용을 발생시켰습니다.</p>
+                        <p>시대 발전에 따라 사람조차 명확히 구분할 수 없는 지식을 구현하거나, 일일이 구현하기에 너무 방대한 규칙들이 필요한 경우가 발생하게 되었습니다.</p>
+                    </div>
+                </div>
+
+                <div class = "subsection">
+                    <h3 class = "subsection-title">머신러닝과 AI의 관계</h3>
+                    <div class = "definition-box">
+                        <h4>인공지능(AI)</h4>
+                        <p>컴퓨터가 사람처럼 생각하고 판단하게 만드는 기술</p>
+                    </div>
+                    <div class = "definition-box">
+                        <h4>머신러닝(ML)</h4>
+                        <p>인공지능의 한 분야, 인간의 학습능력과 같은 기능을 컴퓨터에 부여하기 위한 기술</p>
+                    </div>
+                    <div class = "definition-box">
+                        <h4>딥러닝(DL)</h4>
+                        <p>인공신경망을 기반으로 한 머신러닝 방법론 중 하나, 빅데이터를 기반으로 스스로 학습하며 판단하는 기술</p>
+                    </div>
+                </div>
+
+                <div class = "subsection">
+                    <h3 class = "subsection-title">머신러닝 주요 개념</h3>
+                    <div class = "highlight">
+                        <p class = "highlight-text">"빅데이터를 스스로 분석하고, 그 내용을 바탕으로 결론을 도출하는 기술"</p>
+                    </div>
+                    <div class = "content-block">
+                        <p>머신러닝은 컴퓨터를 인간처럼 학습시킴으로써 새로운 규칙을 생성할 수 있도록 하는 시도에서 시작되었습니다.</p>
+                        <p>일반적으로 알고리즘을 이용하여 데이터를 분석하고, 분석 결과를 스스로 학습한 후 이를 기반으로 판단이나 예측을 수행합니다.</p>
+                        <p><strong>양질의 데이터</strong>가 매우 중요한 역할을 하며, 데이터를 많이 보유할수록 높은 성능을 이끌어낼 수 있습니다.</p>
+                    </div>
+                </div>
+
+                <div class = "subsection">
+                    <h3 class = "subsection-title">학습 방법</h3>
+                    <div class = "learning-types">
+                        <div class = "learning-card">
+                            <h4>지도 학습 (Supervised Learning)</h4>
+                            <p>입력값과 함께 결과값(정답 label)을 같이 주고 학습을 시키는 방법입니다.</p>
+                            <p>정답을 알고 있는 엄마가 아이에게 말을 가르치는 것처럼, 정답을 기반으로 오류를 줄여서 학습합니다.</p>
+                            <div class = "algorithm-list">
+                                <h5>대표적인 알고리즘</h5>
+                                <ul>
+                                    <li><strong>분류(Classification):</strong> 범주형 변수 예측, 이미지에 강아지/고양이 레이블 할당</li>
+                                    <li><strong>회귀(Regression):</strong> 연속적인 값 예측</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class = "learning-card">
+                            <h4>비지도 학습 (Unsupervised Learning)</h4>
+                            <p>지도 학습과 다르게 정답을 알려주지 않고 예측하는 방법입니다.</p>
+                            <p>정답을 모르더라도 유사한 것들과 서로 다른 것들을 구분하여 군집을 만들 수 있는 학습 방법입니다.</p>
+                            <div class = "algorithm-list">
+                                <h5>대표적인 알고리즘</h5>
+                                <ul>
+                                    <li><strong>클러스터링(Clustering):</strong> 유사한 데이터를 그룹화</li>
+                                    <li><strong>차원 축소(Dimension Reduction):</strong> 변수의 개수를 줄여 관계 도출 용이화</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class = "learning-card">
+                            <h4>반지도 학습 (Semi-Supervised Learning)</h4>
+                            <p>지도 학습과 비지도 학습을 섞어서 정답을 유추해 나가는 방법입니다.</p>
+                            <p>군집을 학습한 후 군집의 일부 데이터만 사람이 정답을 매겨주면 그 군집 전체를 매긴 정답으로 파악합니다.</p>
+                        </div>
+
+                        <div class = "learning-card">
+                            <h4>강화 학습 (Reinforcement Learning)</h4>
+                            <p>보상 및 벌칙과 함께 여러 번의 시행착오를 거쳐 스스로 학습하는 방법입니다.</p>
+                            <p>딥마인드의 알파고가 대표적인 적용 사례입니다.</p>
+                            <p>컴퓨터 시뮬레이션을 기반으로 빠르게 반복하며 학습시간의 한계점을 극복합니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class = "section" id = "sdn">
+                <h2 class = "section-title">2. SDN 네트워크 (Software Defined Networking)</h2>
+                
+                <div class = "subsection">
+                    <h3 class = "subsection-title">SDN이란</h3>
+                    <div class = "content-block">
+                        <p>SDN(Software Defined Network)이란, 소프트웨어를 통해 리소스를 가상화하고 추상화하는 네트워크 인프라에 대한 접근 방식입니다.</p>
+                        <p>소프트웨어 애플리케이션과 API를 이용하여 네트워크를 프로그래밍하고 중앙에서 전체 네트워크를 제어하고 관리합니다.</p>
+                    </div>
+                    
+                    <div class = "highlight">
+                        <h4>전통적인 라우터의 Forwarding 과정</h4>
+                        <p><strong>Match:</strong> 라우팅 테이블을 look up하여 목적지 IP 주소를 찾습니다.</p>
+                        <p><strong>Action:</strong> 패킷을 특정 스위치에서 지정된 output port로 전송합니다.</p>
+                    </div>
+                </div>
+
+                <div class = "subsection">
+                    <h3 class = "subsection-title">작동 방식</h3>
+                    <div class = "content-block">
+                        <p><strong>SDN의 핵심:</strong> 네트워크 장비의 제어부(Control Plane)와 전송부(Data Plane)의 분리</p>
+                        <ul style = "color: #cbd5e1; margin-left: 20px;">
+                            <li><strong>Control Plane:</strong> 네트워크 장비를 제어하는 뇌</li>
+                            <li><strong>Data Plane:</strong> 데이터를 전송하는 역할</li>
+                        </ul>
+                    </div>
+                    
+                    <div class = "comparison-table">
+                        <div class = "table-header">
+                            <div>기존 라우터</div>
+                            <div>SDN 적용</div>
+                        </div>
+                        <div class = "table-row">
+                            <div>제어부와 전송부가 함께 존재</div>
+                            <div>제어부와 전송부를 분리</div>
+                        </div>
+                        <div class = "table-row">
+                            <div>각 라우터마다 local forwarding table 보유</div>
+                            <div>logically centralized routing controller가 flow table 결정</div>
+                        </div>
+                        <div class = "table-row">
+                            <div>분산된 제어</div>
+                            <div>중앙 집중식 제어</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class = "section" id = "osi-ips">
+                <h2 class = "section-title">3. OSI vs IPS</h2>
+                
+                <div class = "subsection">
+                    <h3 class = "subsection-title">OSI (Open Systems Interconnection Reference Model)</h3>
+                    <div class = "content-block">
+                        <p>개방형 시스템 상호 연결(OSI) 모델은 표준 프로토콜을 사용하여 다양한 통신 시스템이 통신할 수 있도록 ISO에서 만든 개념 모델입니다.</p>
+                        <p>컴퓨터 네트워킹의 범용 언어로 볼 수 있으며, 통신 시스템을 7개의 추상적 계층으로 나누어 스택 구조로 구성됩니다.</p>
+                    </div>
+                    
+                    <div class = "layers-grid">
+                        <div class = "layer-card">
+                            <div class = "layer-number">7</div>
+                            <div class = "layer-name">Application Layer</div>
+                            <div class = "layer-description">응용 프로세스와 직접적으로 관계하여 일반적인 응용 서비스를 수행</div>
+                        </div>
+                        <div class = "layer-card">
+                            <div class = "layer-number">6</div>
+                            <div class = "layer-name">Presentation Layer</div>
+                            <div class = "layer-description">코드간 번역을 담당하며 데이터의 형식상 차이를 다루는 역할</div>
+                        </div>
+                        <div class = "layer-card">
+                            <div class = "layer-number">5</div>
+                            <div class = "layer-name">Session Layer</div>
+                            <div class = "layer-description">End to End의 응용 프로세스가 통신을 관리하기 위한 방법을 제공</div>
+                        </div>
+                        <div class = "layer-card">
+                            <div class = "layer-number">4</div>
+                            <div class = "layer-name">Transport Layer</div>
+                            <div class = "layer-description">End to End의 사용자들이 신뢰성 있는 데이터를 주고 받을 수 있도록 하는 역할</div>
+                        </div>
+                        <div class = "layer-card">
+                            <div class = "layer-number">3</div>
+                            <div class = "layer-name">Network Layer</div>
+                            <div class = "layer-description">여러 개의 노드를 거칠 때마다 경로를 찾아주는 역할을 담당</div>
+                        </div>
+                        <div class = "layer-card">
+                            <div class = "layer-number">2</div>
+                            <div class = "layer-name">Data Link Layer</div>
+                            <div class = "layer-description">Point to Point간 신뢰성 있는 전송을 보장하기 위한 역할 수행</div>
+                        </div>
+                        <div class = "layer-card">
+                            <div class = "layer-number">1</div>
+                            <div class = "layer-name">Physical Layer</div>
+                            <div class = "layer-description">실제 장치들을 연결하기 위해 필요한 전기적, 물리적 세부 사항들을 정의</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class = "subsection">
+                    <h3 class = "subsection-title">IPS (Internet Protocol Stack)</h3>
+                    <div class = "content-block">
+                        <p>Internet Protocol Stack 또는 Internet Protocol Suite는 5계층 스택 구조로 이루어진 프로토콜의 집합입니다.</p>
+                        <p>OSI 7계층 구조와 마찬가지로 스택과 유사한 모습의 구현체이며, 표현과 분류 방식이 단순화되었습니다.</p>
+                    </div>
+                    
+                    <div class = "layers-grid">
+                        <div class = "layer-card">
+                            <div class = "layer-number">5</div>
+                            <div class = "layer-name">Application Layer</div>
+                            <div class = "layer-description">HTTP, SMTP, FTP 등 송수신 측 주고 받는 서비스에 따라 프로토콜이 존재</div>
+                        </div>
+                        <div class = "layer-card">
+                            <div class = "layer-number">4</div>
+                            <div class = "layer-name">Transport Layer</div>
+                            <div class = "layer-description">데이터 전송의 신뢰성을 보장하기 위한 계층, TCP, UDP</div>
+                        </div>
+                        <div class = "layer-card">
+                            <div class = "layer-number">3</div>
+                            <div class = "layer-name">Network Layer</div>
+                            <div class = "layer-description">데이터를 원하는 목적지로 전송하는 역할 수행</div>
+                        </div>
+                        <div class = "layer-card">
+                            <div class = "layer-number">2</div>
+                            <div class = "layer-name">Data Link Layer</div>
+                            <div class = "layer-description">한 노드에서 인접 노드로 패킷을 보내기 위한 역할</div>
+                        </div>
+                        <div class = "layer-card">
+                            <div class = "layer-number">1</div>
+                            <div class = "layer-name">Physical Layer</div>
+                            <div class = "layer-description">실제 장치들을 연결하기 위해 필요한 전기적, 물리적 세부 사항들을 정의</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class = "subsection">
+                    <h3 class = "subsection-title">OSI 모델의 필요성</h3>
+                    <div class = "highlight">
+                        <p>현대 인터넷은 OSI 모델을 엄격히 따르지 않고 더 단순한 IPS 구조를 따르지만, OSI 모델은 여전히 네트워크 문제를 해결하는 데 유용합니다.</p>
+                        <p>문제를 분석하고 원인을 분리하는 데 도움이 되며, 문제를 모델의 특정 계층으로 좁힐 수 있어 불필요한 작업을 피할 수 있습니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <nav class = "navigation">
+            <a href = "#machine-learning" class="nav-item">머신러닝</a>
+            <a href = "#sdn" class="nav-item">SDN</a>
+            <a href = "#osi-ips" class="nav-item">OSI/IPS</a>
+        </nav>
+        <script type = "text/javascript" src = "/js/bg_script.js"></script>
+    </body>
+</html>

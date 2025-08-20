@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang = "ko">
+    <head>
+        <meta charset = "UTF-8">
+        <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
+        <title>SDN 네트워크 공격 방어 시스템</title>
+        <link rel = "stylesheet" href = "/css/webUI_style.css">
+        <link rel = "stylesheet" href = "/fonts/font1_style.css">
+    </head>
+    <body>
+        <div class = "container">
+            <div class = "header">
+                <h1>🛡️ SDN 네트워크 공격 방어 시스템</h1>
+                <p>머신러닝 기반 실시간 보안 모니터링 및 자동 방어</p>
+            </div>
+
+            <div class = "control-panel">
+                <div class = "control-section">
+                    <h3>공격 시나리오 선택</h3>
+                    <div class = "checkbox-group">
+                        <label class = "checkbox-item">
+                            <input type = "checkbox" id = "ddos" value = "ddos">
+                            <span>DDoS 공격</span>
+                        </label>
+                        <label class = "checkbox-item">
+                            <input type = "checkbox" id = "port-scan" value = "port-scan">
+                            <span>포트 스캔</span>
+                        </label>
+                        <label class = "checkbox-item">
+                            <input type = "checkbox" id = "mitm" value = "mitm">
+                            <span>중간자 공격</span>
+                        </label>
+                        <label class = "checkbox-item">
+                            <input type = "checkbox" id = "flow-table" value = "flow-table">
+                            <span>플로우 테이블 오버플로우</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class = "control-section">
+                    <h3>SDN 자동 방어 적용</h3>
+                    <div class = "checkbox-group">
+                        <label class = "checkbox-item">
+                            <input type = "checkbox" id = "ml-detection" value = "ml-detection" checked>
+                            <span>머신러닝 이상 탐지</span>
+                        </label>
+                        <label class = "checkbox-item">
+                            <input type = "checkbox" id = "auto-block" value = "auto-block" checked>
+                            <span>자동 IP 차단</span>
+                        </label>
+                        <label class = "checkbox-item">
+                            <input type = "checkbox" id = "flow-control" value = "flow-control" checked>
+                            <span>플로우 규칙 동적 조정</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button class = "start-button" onclick = "startAttackSimulation()">
+                    공격 시뮬레이션 시작
+                </button>
+            </div>
+
+            <div class = "visualization">
+                <h3>네트워크 토폴로지 및 실시간 상태</h3>
+                
+                <div class = "network-diagram">
+                    <div class = "node controller" id = "controller">
+                        <span>SDN<br>Controller</span>
+                        <div class = "status-indicator status-safe"></div>
+                    </div>
+                    
+                    <div class = "connection" id = "conn1" style = "left: 90px; width: 200px;"></div>
+                    
+                    <div class = "node switch" id = "switch1">
+                        <span>Switch<br>1</span>
+                        <div class = "status-indicator status-safe"></div>
+                    </div>
+                    
+                    <div class = "connection" id = "conn2" style = "left: 370px; width: 150px;"></div>
+                    
+                    <div class = "node switch" id = "switch2">
+                        <span>Switch<br>2</span>
+                        <div class = "status-indicator status-safe"></div>
+                    </div>
+                    
+                    <div class = "connection" id = "conn3" style = "left: 600px; width: 200px;"></div>
+                    
+                    <div class = "node host" id = "host">
+                        <span>Host</span>
+                        <div class = "status-indicator status-safe"></div>
+                    </div>
+                    
+                    <div class = "node attacker" id = "attacker" style = "position: absolute; bottom: 20px; right: 20px;">
+                        <span>Attacker</span>
+                        <div class = "status-indicator status-safe"></div>
+                    </div>
+                </div>
+
+                <div class = "stats">
+                    <div class = "stat-card">
+                        <div class = "stat-value" id = "traffic-volume">0</div>
+                        <div class = "stat-label">트래픽 볼륨 (Mbps)</div>
+                    </div>
+                    <div class = "stat-card">
+                        <div class = "stat-value" id = "attack-detected">0</div>
+                        <div class = "stat-label">탐지된 공격</div>
+                    </div>
+                    <div class = "stat-card">
+                        <div class = "stat-value" id = "blocked-ips">0</div>
+                        <div class = "stat-label">차단된 IP</div>
+                    </div>
+                    <div class = "stat-card">
+                        <div class = "stat-value" id = "response-time">0</div>
+                        <div class = "stat-label">응답시간 (ms)</div>
+                    </div>
+                </div>
+
+                <div class = "log" id = "log">
+                    <div class = "log-entry log-info">[INFO] SDN 컨트롤러 초기화 완료</div>
+                    <div class = "log-entry log-info">[INFO] 머신러닝 모델 로드 완료</div>
+                    <div class = "log-entry log-info">[INFO] 네트워크 토폴로지 스캔 완료</div>
+                    <div class = "log-entry log-info">[INFO] 시스템 준비 완료 - 공격 시뮬레이션 대기중</div>
+                </div>
+            </div>
+        </div>
+
+        <script type = "text/javascript" src = "/js/webUI_script.js"></script>
+    </body>
+</html>

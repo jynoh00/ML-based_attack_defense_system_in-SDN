@@ -1,0 +1,33 @@
+#!/usr/bin/env node
+const debug = require('debug')('my_application');
+const app = require('../src/app');
+
+app.set('port', process.env.PORT || 3000);
+
+const server = app.listen(app.get('port'), () => {
+    debug('ML-Based attack defense system in SDN web-service on port ' + server.address().port);
+    console.log('Web server is running on port ' + server.address().port);
+});
+
+server.on('error', (error) => {
+    if (error.syscall !== 'listen'){
+        throw error;
+    }
+
+    const bind = typeof app.get('port') === 'starting'
+        ? 'Pipe ' + app.get('port')
+        : 'Port ' + app.get('port');
+    
+    switch(error.code){
+        case 'EACCES':
+            console.error(bind + ' requires elevated privileges');
+            process.exit(1);
+            break;
+        case 'EADDRINUSE':
+            console.error(bind + ' is already in use');
+            process.exit(1);
+            break;
+        default:
+            throw error;
+    }
+});

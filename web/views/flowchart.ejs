@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang = "ko">
+    <head>
+        <meta charset = "UTF-8">
+        <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
+        <title>ML-Based Network Security System Architecture</title>
+        <link rel = "stylesheet" href = "/css/flowchart_style.css">
+        <link rel = "stylesheet" href = "/css/fonts/font1_style.css">
+    </head>
+    <body>
+        <div class = "container">
+            <h1 class = "title">ML-Based Network Security System</h1>
+            <p class = "subtitle">머신러닝 기반 네트워크 공격 방어 시스템 아키텍처</p>
+            
+            <div class = "flowchart">
+                <div class = "step">
+                    <div class = "step-number">1</div>
+                    <div class = "step-title">머신러닝 학습 모델</div>
+                    <div class = "step-description">
+                        다양한 네트워크 공격 데이터를 활용하여 머신러닝 모델을 학습시키고, 
+                        학습된 모델을 기반으로 공격 탐지 및 방어 시스템을 구축합니다.
+                    </div>
+                    <div class = "tech-stack">
+                        <span class = "tech-tag python">Python</span>
+                        <span class = "tech-tag">TensorFlow/PyTorch</span>
+                        <span class = "tech-tag">Scikit-learn</span>
+                    </div>
+                    <div class = "highlight-box">
+                        <div class = "highlight-title">주요 기능</div>
+                        <div>• 네트워크 트래픽 패턴 분석<br>• 이상 탐지 알고리즘<br>• 공격 유형 분류</div>
+                    </div>
+                </div>
+
+                <div class = "arrow"></div>
+
+                <div class = "step">
+                    <div class = "step-number">2</div>
+                    <div class = "step-title">웹 인터페이스</div>
+                    <div class = "step-description">
+                        공격 시나리오 선택 및 SDN 자동방어 옵션을 제공하는 웹 인터페이스를 통해 
+                        사용자가 시뮬레이션을 제어하고 공격을 시작할 수 있습니다.
+                    </div>
+                    <div class = "tech-stack">
+                        <span class = "tech-tag nodejs">Node.js</span>
+                        <span class = "tech-tag">Express.js</span>
+                        <span class = "tech-tag">React/Vue.js</span>
+                    </div>
+                    <div class = "data-flow">JSON 데이터 전송</div>
+                    <div class = "highlight-box">
+                        <div class = "highlight-title">제공 기능</div>
+                        <div>• 공격 시나리오 선택<br>• SDN 방어 설정<br>• 실시간 모니터링</div>
+                    </div>
+                </div>
+
+                <div class = "arrow"></div>
+
+                <div class = "parallel-container">
+                    <div class = "step parallel-step">
+                        <div class = "step-number">3</div>
+                        <div class = "step-title">네트워크 시뮬레이션</div>
+                        <div class = "step-description">
+                            웹에서 전송받은 JSON 데이터를 기반으로 Mininet을 활용하여 
+                            실제 네트워크 환경을 시뮬레이션합니다.
+                        </div>
+                        <div class = "tech-stack">
+                            <span class = "tech-tag python">Python</span>
+                            <span class = "tech-tag">Mininet</span>
+                            <span class = "tech-tag">OpenFlow</span>
+                        </div>
+                        <div class = "highlight-box">
+                            <div class = "highlight-title">시뮬레이션 환경</div>
+                            <div>• 가상 네트워크 토폴로지<br>• SDN 컨트롤러 연동<br>• 트래픽 생성 및 분석</div>
+                        </div>
+                    </div>
+
+                    <div class = "step parallel-step">
+                        <div class = "step-number">4</div>
+                        <div class = "step-title">고성능 패킷 처리</div>
+                        <div class = "step-description">
+                            성능이 중요한 패킷 파싱과 커널 레벨 모듈을 C/C++로 구현하여 
+                            실시간 고속 패킷 처리를 담당합니다.
+                        </div>
+                        <div class = "tech-stack">
+                            <span class = "tech-tag cpp">C/C++</span>
+                            <span class = "tech-tag">DPDK</span>
+                            <span class = "tech-tag">eBPF</span>
+                        </div>
+                        <div class = "highlight-box">
+                            <div class = "highlight-title">최적화 영역</div>
+                            <div>• 빠른 패킷 파싱<br>• 커널 레벨 필터링<br>• 하드웨어 가속</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class = "merge-arrow">
+                    <div class = "merge-line"></div>
+                </div>
+
+                <div class = "step">
+                    <div class = "step-number">5</div>
+                    <div class = "step-title">결과 데이터 처리</div>
+                    <div class = "step-description">
+                        시뮬레이션과 패킷 처리 결과를 JSON 형태로 통합하여 
+                        웹 인터페이스로 전송할 수 있는 형태로 가공합니다.
+                    </div>
+                    <div class = "tech-stack">
+                        <span class = "tech-tag python">Python</span>
+                        <span class = "tech-tag json">JSON</span>
+                        <span class = "tech-tag">REST API</span>
+                    </div>
+                    <div class = "data-flow">결과 JSON 출력</div>
+                    <div class = "highlight-box">
+                        <div class = "highlight-title">출력 데이터</div>
+                        <div>• 공격 탐지 결과<br>• 네트워크 성능 메트릭<br>• 방어 효과 분석</div>
+                    </div>
+                </div>
+
+                <div class = "arrow"></div>
+
+                <div class = "step">
+                    <div class = "step-number">6</div>
+                    <div class = "step-title">웹 UI 시각화</div>
+                    <div class = "step-description">
+                        처리된 결과 JSON 데이터를 받아와서 직관적이고 전문적인 
+                        웹 UI를 통해 사용자에게 시각화하여 제공합니다.
+                    </div>
+                    <div class = "tech-stack">
+                        <span class = "tech-tag nodejs">Node.js</span>
+                        <span class = "tech-tag">Chart.js/D3.js</span>
+                        <span class = "tech-tag">WebSocket</span>
+                    </div>
+                    <div class = "highlight-box">
+                        <div class = "highlight-title">시각화 요소</div>
+                        <div>• 실시간 대시보드<br>• 공격 패턴 그래프<br>• 네트워크 토폴로지 뷰</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type = "text/javascript" src = "/js/flowchart_script.js"></script>
+    </body>
+</html>
