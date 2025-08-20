@@ -3,7 +3,8 @@
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-16+-green.svg)](https://nodejs.org/)
 [![C++](https://img.shields.io/badge/C++-17-red.svg)](https://isocpp.org/)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Mininet](https://img.shields.io/badge/Mininet-2.3.0-brightgreen.svg)](http://mininet.org/)
+[![Ryu](https://img.shields.io/badge/Ryu-SDN-orange.svg)](https://osrg.github.io/ryu/)
 
 > **머신러닝 기반의 SDN 네트워크 공격 방어 시스템**  
 > Software Defined Networking 환경에서 실시간 위협 탐지 및 자동화된 보안 대응을 제공하는 시스템 개발
