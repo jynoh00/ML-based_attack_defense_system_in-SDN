@@ -777,6 +777,7 @@ try:<br>
 - 단어 단위로 명령어를 표준 입력을 통해 command에 할당한다.
 - command에 따라 stats, reset, quit/exit일 경우 이에 해당하는 analyzer 객체 메소드를 실행한다.
 - analyzer 객체의 start() 메소드로 pcap_loop를 호출하여 패킷 캡처 및 분석을 시작한다.<br>
+
 catch:<br>
 &emsp;try 블록에서 예외가 발생할 경우 해당 메시지를 표준 에러로 출력하고 비정상 종료한다.<br>
 이후 정상 종료한다.
