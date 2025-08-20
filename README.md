@@ -2,7 +2,15 @@
 
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-16+-green.svg)](https://nodejs.org/)
+[![Express.js](https://img.shields.io/badge/Express.js-4.x-lightgrey.svg)](https://expressjs.com/)
+[![HTML5](https://img.shields.io/badge/HTML5-orange.svg)](https://developer.mozilla.org/docs/Web/HTML)
+[![CSS3](https://img.shields.io/badge/CSS3-blue.svg)](https://developer.mozilla.org/docs/Web/CSS)
+[![JavaScript](https://img.shields.io/badge/JavaScript-yellow.svg)](https://developer.mozilla.org/docs/Web/JavaScript)
 [![C++](https://img.shields.io/badge/C++-17-red.svg)](https://isocpp.org/)
+[![libpcap](https://img.shields.io/badge/libpcap-1.10-lightblue.svg)](https://www.tcpdump.org/)
+[![chrono](https://img.shields.io/badge/chrono-C++17-brightgreen.svg)](https://en.cppreference.com/w/cpp/chrono)
+[![mutex](https://img.shields.io/badge/mutex-C++17-purple.svg)](https://en.cppreference.com/w/cpp/thread/mutex)
+[![thread](https://img.shields.io/badge/thread-C++17-blueviolet.svg)](https://en.cppreference.com/w/cpp/thread)
 [![Mininet](https://img.shields.io/badge/Mininet-2.3.0-brightgreen.svg)](http://mininet.org/)
 [![Ryu](https://img.shields.io/badge/Ryu-SDN-orange.svg)](https://osrg.github.io/ryu/)
 
