@@ -213,7 +213,7 @@ public:
         string scan_key = packet.src_ip + "->" + packet.dst_ip;
         port_scan_tracker_[scan_key].insert(packet.dst_port);
 
-        if (port_scan_tracker_[scan_key].size() > DetectionThresholds::PORT_SCAN_THRESHOLD){ // ?? 왜 타입이 안뜨지 -> 해결 : 들여쓰기
+        if (port_scan_tracker_[scan_key].size() > DetectionThresholds::PORT_SCAN_THRESHOLD){
             cout << "[ALERT] Port scan detected from " << packet.src_ip << " to " << packet.dst_ip << " (" << port_scan_tracker_[scan_key].size() << " unique ports)" << endl;
         }
     }
