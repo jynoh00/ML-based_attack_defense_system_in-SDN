@@ -186,6 +186,7 @@ public:
     }
 ```
 > 고속패킷분석 클래스의 생성자와 소멸자
+
 생성자:<br>
 &emsp;인터페이스 이름을 참조받아 initialize_capture()함수를 호출하여 패킷 캡처를 초기화한다.<br>
 &emsp;또한 pcap_handle_ 변수값을 null로 초기화하고, 워커 스레드를 하드웨어 코어 수만큼 생성한다.<br>
@@ -216,6 +217,7 @@ void initialize_capture(const string& interface){
 }
 ```
 > 캡처 초기화 메소드, 인터페이스를 열고 필터를 설정
+
 errbuf 문자 배열로 pcap 에러 메시지를 받을 버퍼를 생성하고<br>
 pcap_open_live() 함수로 지정 인터페이스를 열어 실시간 캡처를 시작할 준비를 한다.
 이를 pcap_handle_에 할당한다.<br>
@@ -239,7 +241,8 @@ static void packet_handler(u_char* user_data, const struct pcap_pkthdr* pkthdr, 
     analyzer->process_packet(pkthdr, packet);
 }
 ```
-> libpcap 콜백에 쓰이는 정적 함수, pcap이 패킷을 잡을 때 호출된다.<br>
+> libpcap 콜백에 쓰이는 정적 함수, pcap이 패킷을 잡을 때 호출된다.
+
 analyzer 변수는 reinterpret_cast<>()를 통해 user_data를 HighSpeedPacketAnalyzer 포인터로 되돌린 값을 담는다.<br>
 이는 생성자에서 전달된 this 포인터에 해당한다.<br>
 <br>
@@ -373,6 +376,7 @@ void packet_processor(){
 }
 ```
 > 워커 스레드가 실행할 패킷 처리 루프 메소드
+
 running_의 값이 true인 동안 다음 루프를 반복한다.<br>
 &emsp;packet_info를 생성하고<br>
 &emsp;큐 접근을 위해 스코프를 열어 mutex lock을 적용한다.<br>
@@ -399,6 +403,7 @@ void analyze_packet(const PacketInfo& packet){
 }
 ```
 > 패킷 분석 메소드, 디도스-포트 스캔-이상 트래픽 탐지 함수를 호출한다.
+
 flow_key에 패킷의 소스-목적지 IP와 PORT 정보를 담은 문자열을 할당한다.<br>
 (플로우를 구분하기 위한 문자열 키 ex - "1.2.3.4:1234->5.6.7.8:80")<br>
 <br>
@@ -434,6 +439,7 @@ void detect_ddos_attack(const PacketInfo& packet){
 }
 ```
 > 디도스(DDoS) 공격 탐지 메소드
+
 소스 IP기준으로 타임스탬프를 분석하여 DDoS 의심 여부를 판단한다.<br>
 <br>
 lock_guard로 ddos_tracker_ 접근을 보호하기 위한 mutex lock을 건다.<br>
@@ -465,6 +471,7 @@ void detect_port_scan(const PacketInfo& packet){
 }
 ```
 > 포트 스캔 탐지 메소드
+
 port_scan_tracker_ 접근을 보호하기 위해 scan_mutex_로 mutex lock을 건다.<br>
 이후 scan_key 문자열을 할당 (ex - "1.2.3.4->5.6.7.8")<br>
 port_scan_tracker_에 scan_key에 해당하는 키에 대해 목적지 포트를 집합에 추가한다.<br>
@@ -486,6 +493,7 @@ void detect_anomalous_traffic(const PacketInfo& packet){
 }
 ```
 > 이상 트래픽 감지 메소드 (큰 패킷, 비정상 프로토콜)
+
 패킷의 크기가 9000 바이트보다 클 경우 경고 메시지를 표준 출력<br>
 패킷의 프로토콜이 TCP, UDP, ICMP 모두 아닐 경우 경고 메시지를 표준 출력<br>
 <br>
@@ -510,6 +518,7 @@ void detect_anomalous_traffic(const PacketInfo& packet){
     }
 ```
 > 패킷 캡처 및 분석 시작, 종료 메소드
+
 start():<br>
 &emsp;running_ 상태를 true로 설정<br>
 &emsp;고속 패킷 분석 시작 표준 메시지 출력<br>
@@ -668,6 +677,7 @@ void reset_statistics(){
 }
 ```
 > 패킷 분석의 모든 통계를 초기화하는 메소드
+
 flow_stats_, port_scan_tracker_, ddos_tracker_를 보호하는 모든 mutex lock을 실행한다.<br>
 이후 flow_stats_, port_scan_tracker_, ddos_tracker_, total_packets_, total_bytes_ 값을 전부 비우고 0으로 초기화한다.<br>
 <br>
@@ -761,12 +771,12 @@ int main(int argc, char* argv[]){
 try:<br>
 &emsp;인자로 전달된 인터페이스 이름을 interface 변수에 할당한다.<br>
 &emsp;analyzer 변수명으로 HighSpeedPacketAnalyzer 객체를 생성하여 캡처 초기화 및 워커 스레드 생성을 실행한다.<br>
-&emsp;통계 출력을 위한 스레드인 stats_thread를 생성하고 analyzer 객체를 참조하여
+&emsp;통계 출력을 위한 스레드인 stats_thread를 생성하고 analyzer 객체를 참조하여<br>
 &emsp;다음 람다로 동작을 정의한다.
 - 명령어를 담을 문자열 변수 command 선언
 - 단어 단위로 명령어를 표준 입력을 통해 command에 할당한다.
 - command에 따라 stats, reset, quit/exit일 경우 이에 해당하는 analyzer 객체 메소드를 실행한다.
-- analyzer 객체의 start() 메소드로 pcap_loop를 호출하여 패킷 캡처 및 분석을 시작한다.
+- analyzer 객체의 start() 메소드로 pcap_loop를 호출하여 패킷 캡처 및 분석을 시작한다.<br>
 catch:<br>
 &emsp;try 블록에서 예외가 발생할 경우 해당 메시지를 표준 에러로 출력하고 비정상 종료한다.<br>
 이후 정상 종료한다.
