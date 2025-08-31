@@ -51,7 +51,7 @@ class MLDefenseController(app_manager.RyuApp):
         self.blocked_ips = set()
         self.suspicious_ips = defaultdict(float) # float = 의심 점수, 딕셔너리
         self.attack_counters = defaultdict(int)
-        self.whiteList_ips = {'10.0.1.250'} # Monitor - *** topo에서 10.30.1.20/24로 설정했었음, 수정 필요
+        self.whiteList_ips = {'10.0.1.250'} # Monitor - *** topo에서 10.30.1.20/24(simple: 10.0.1.250)로 설정했었음, 수정 필요
 
         self.config = {
             'model_path': 'data/models/',
