@@ -143,6 +143,7 @@ class DataPreprocessor:
         print('Cleaning CIC-IDS 2017 dataset ...')
 
         X = X.replace([np.inf, -np.inf], np.nan) # 데이터셋 X에서 무한대 값을 NaN으로 변경
+        
 
         before_count = len(X)
         mask = ~(X.isna().any(axis=1) | y.isna()) 
@@ -227,11 +228,9 @@ class DataPreprocessor:
         if X_test is not None:
             X_test_scaled = scaler.transform(X_test)
             X_test_scaled = pd.DataFrame(X_test_scaled, columns=X_test.columns, index=X_test.index)
+        else: X_test_scaled = None
 
-            return X_train_scaled, X_test_scaled, scaler
-
-        return X_train_scaled, scaler
-
+        return X_train_scaled, X_test_scaled, scaler
         
     def create_binary_labels(self, y, dataset_type='cicids'):
         print('Creating binary labels ...')
@@ -307,7 +306,7 @@ def main():
     
     if args.dataset in ['cicids2017', 'both']:
         result = preprocessor.process_dataset('cicids2017', args.sample_size, args.binary, scaling=args.scaling)
-        if result: print('CIC-IDS 2017 preprocessing completed succesfully')
+        if result: print('CIC-IDS 2017 preprocessing completed successfully')
 
     if args.dataset in ['nslkdd', 'both']:
         result = preprocessor.process_dataset('nslkdd', args.sample_size, args.binary, scaling=args.scaling)
