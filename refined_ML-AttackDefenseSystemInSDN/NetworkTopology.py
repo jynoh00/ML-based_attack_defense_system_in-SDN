@@ -180,7 +180,7 @@ class NetworkTopology:
         if web_server:
             web_server.cmd('echo "Welcome to Enterprise Web Server" > /tmp/index.html')
             web_server.cmd('cd /tmp && python3 -m http.server 80 &')
-            web_server.cmd('python3 -m http.server 443 &')
+            # web_server.cmd('python3 -m http.server 443 &') // 중복실행 포트 충돌 가능성 (checkThis)
         
         # DB server 부
         db_server = None
@@ -301,7 +301,7 @@ class NetworkTopology:
     def run_connectivity_tests(self): 
         info('*** Running connectivity tests\n')
 
-        if 'workstations' in self.host and 'servers' in self.hosts:
+        if 'workstations' in self.hosts and 'servers' in self.hosts:
             client = self.hosts['workstations'][0]
             server = self.hosts['servers'][0]
 
@@ -513,7 +513,7 @@ def main():
     parser.add_argument('--topology', choices=['enterprise', 'simple'], default='enterprise', help='Topology type')
     parser.add_argument('--controller-ip', default='127.0.0.1', help='Controller IP address')
     parser.add_argument('--controller-port', type=int, default=6653, help='Controller port')
-    parser.add_argument('--test', action='stor_true', help='Run automated tests')
+    parser.add_argument('--test', action='store_true', help='Run automated tests')
     parser.add_argument('--duration', type=int, default=0, help='Auto-stop after duration (seconds)')
     
     args = parser.parse_args()
