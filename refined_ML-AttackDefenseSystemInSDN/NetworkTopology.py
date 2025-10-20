@@ -14,7 +14,7 @@ import threading
 import subprocess
 import argparse
 
-class AdvancedNetworkTopology:
+class NetworkTopology:
     def __init__(self, controller_ip='127.0.0.1', controller_port=6653):
         self.controller_ip = controller_ip
         self.controller_port = controller_port
@@ -509,7 +509,7 @@ class NetworkTestRunner:
         return self.test_results
 
 def main(): 
-    parser = argparse.ArgumentParser(description='Advanced Network Topology for ML-SDN Defense')
+    parser = argparse.ArgumentParser(description='Network Topology for ML-SDN Defense')
     parser.add_argument('--topology', choices=['enterprise', 'simple'], default='enterprise', help='Topology type')
     parser.add_argument('--controller-ip', default='127.0.0.1', help='Controller IP address')
     parser.add_argument('--controller-port', type=int, default=6653, help='Controller port')
@@ -524,7 +524,7 @@ def main():
     
     setLogLevel('info')
 
-    topology = AdvancedNetworkTopology(args.controller_ip, args.controller_port)
+    topology = NetworkTopology(args.controller_ip, args.controller_port)
 
     try:
         net = topology.start_network(args.topology)

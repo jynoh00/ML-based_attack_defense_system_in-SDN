@@ -1,5 +1,5 @@
 # Ryu SDN Controller: network management, traffic monitoring
-## /ryu_controller/code1.py
+## ryu_controller/code1.py
 #### 20203009 JY_NOH
 
 1. Library Import

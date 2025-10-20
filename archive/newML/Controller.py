@@ -29,11 +29,11 @@ try:
     from logger import setup_logger
 except ImportError: print('Warning: Custom modules not found. Some features may be limited.')
 
-class MLDefenseController(app_manager.RyuApp):
+class Controller(app_manager.RyuApp):
     OFP_VERSIONS = [ofproto_v1_3.OFP_VERSION]
 
     def __init__(self, *args, **kwargs):
-        super(MLDefenseController, self).__init__(*args, **kwargs) # app_manager.RyuApp 상속
+        super(Controller, self).__init__(*args, **kwargs) # app_manager.RyuApp 상속
 
         self.mac_to_port = {}
         self.ip_to_mac = {}
@@ -87,7 +87,7 @@ class MLDefenseController(app_manager.RyuApp):
     def setup_logging(self): 
         log_format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
         logging.basicConfig(level=getattr(logging, self.config['log_level']), format=log_format)
-        self.logger = logging.getLogger('MLDefenseController')
+        self.logger = logging.getLogger('Controller')
 
         # file handler
         os.makedirs('logs', exist_ok=True)

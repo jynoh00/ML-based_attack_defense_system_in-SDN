@@ -18,7 +18,7 @@ import argparse
 import json
 import joblib
 
-class NetworkFeatureExtractor:
+class FeatureExtractor:
     def __init__(self):
         self.flow_cache = defaultdict(dict)
         self.connection_states = defaultdict(str)
@@ -395,7 +395,7 @@ class NetworkFeatureExtractor:
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Network Feature Extraction')
+    parser = argparse.ArgumentParser(description='Feature Extraction')
     parser.add_argument('--input', required=True, help='Input CSV file')
     parser.add_argument('--output', required=True, help='Output directory')
     parser.add_argument('--method', choices=['chi2', 'f_classif', 'mutual_info', 'random_forest'], default='mutual_info', help='Feature selection method')
@@ -418,7 +418,7 @@ def main():
         label_col = 'class'
     else: raise ValueError('No label column found ("Label" or "class")')
 
-    extractor = NetworkFeatureExtractor()
+    extractor = FeatureExtractor()
     
     X_advanced = extractor.create_advanced_features(X)
     X_selected, selected_features, selector = extractor.select_best_features(X_advanced, y, method=args.method, k=args.k)

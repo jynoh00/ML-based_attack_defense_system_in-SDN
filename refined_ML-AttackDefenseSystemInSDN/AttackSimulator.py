@@ -19,7 +19,7 @@ except ImportError:
     print('Error: Scapy not installed. ( pip install scapy )')
     sys.exit(1)
 
-class EnhancedAttackSimulator:
+class AttackSimulator:
     def __init__(self, target_ip='10.0.1.100', attacker_ip='10.0.1.200', interface='eth0'):
         self.target_ip = target_ip
         self.attacker_ip = attacker_ip
@@ -107,8 +107,8 @@ class EnhancedAttackSimulator:
             source_ips.append(ip)
         return source_ips
 
-    def advanced_syn_flood(self, duration=60, packet_rate=1000, distributed=False):
-        self.logger.info(f'Starting Advanced SYN Flood: {duration}s at {packet_rate}pps')
+    def syn_flood(self, duration=60, packet_rate=1000, distributed=False):
+        self.logger.info(f'Starting SYN Flood: {duration}s at {packet_rate}pps')
         self.running = True
         start_time = time.time()
         packets_sent = 0
@@ -142,8 +142,8 @@ class EnhancedAttackSimulator:
             self.logger.info(f'SYN Flood completed: {packets_sent} packets sent')
         except Exception as e: self.logger.error(f'SYN Flood error: {e}')
         
-    def advanced_udp_flood(self, duration=60, packet_rate=500):
-        self.logger.info(f'Starting Advanced UDP Flood: {duration}s at {packet_rate}pps')
+    def udp_flood(self, duration=60, packet_rate=500):
+        self.logger.info(f'Starting UDP Flood: {duration}s at {packet_rate}pps')
         self.running = True
         start_time = time.time()
         packets_sent = 0
@@ -179,9 +179,9 @@ class EnhancedAttackSimulator:
             self.logger.info(f'UDP Flood completed: {packets_sent} packets sent')
         except Exception as e: self.logger.error(f'UDP Flood error: {e}')
 
-    def advanced_port_scan(self, port_range=(1, 1024), scan_type='syn', stealth=True):
+    def port_scan(self, port_range=(1, 1024), scan_type='syn', stealth=True):
         start_port, end_port = port_range
-        self.logger.info(f'Starting Advanced Port Scan: ports {start_port}-{end_port}, type: {scan_type}')
+        self.logger.info(f'Starting Port Scan: ports {start_port}-{end_port}, type: {scan_type}')
         self.running = True
         ports_scanned = 0
 
@@ -396,8 +396,8 @@ class EnhancedAttackSimulator:
             self.logger.info('Botnet Simulation completed')
         except Exception as e: self.logger.error(f'Botnet Simulation error: {e}')
 
-    def advanced_evasion_attack(self, duration=60): 
-        self.logger.info(f'Starting Advanced Evasion Attack: {duration}s')
+    def evasion_attack(self, duration=60): 
+        self.logger.info(f'Starting Evasion Attack: {duration}s')
         self.running = True
         start_time = time.time()
         packets_sent = 0
@@ -584,7 +584,7 @@ class EnhancedAttackSimulator:
 
         self.logger.info(f'Statistics saved to {filename}')
 def main():
-    parser = argparse.ArgumentParser(description='Enhanced Attack Simulator for ML-SDN Defense Testing')
+    parser = argparse.ArgumentParser(description='Attack Simulator for ML-SDN Defense Testing')
     parser.add_argument('--target', required=True, help='Target IP address')
     parser.add_argument('--attacker', default='10.0.1.200', help='Attacker IP address')
     parser.add_argument('--interface', default='eth0', help='Network interface')
@@ -601,17 +601,17 @@ def main():
 
     if os.geteuid() != 0:
         print('This script requires root privileges for raw packet generation.')
-        print('Please run with: sudo python3 attack_simulator_enhanced.py')
+        print('Please run with: sudo python3 AttackSimulator.py')
         return
 
-    simulator = EnhancedAttackSimulator(args.target, args.attacker, args.interface)
+    simulator = AttackSimulator(args.target, args.attacker, args.interface)
 
     try:
-        if args.attack == 'syn_flood': simulator.advanced_syn_flood(args.duration, args.rate, args.distributed)
-        elif args.attack == 'udp_flood': simulator.advanced_udp_flood(args.duration, args.rate)
+        if args.attack == 'syn_flood': simulator.syn_flood(args.duration, args.rate, args.distributed)
+        elif args.attack == 'udp_flood': simulator.udp_flood(args.duration, args.rate)
         elif args.attack == 'port_scan':
             scan_type = 'syn' if not args.stealth else 'fin'
-            simulator.advanced_port_scan((1, 1024), scan_type, args.stealth)
+            simulator.port_scan((1, 1024), scan_type, args.stealth)
         elif args.attack == 'http_flood': simulator.http_flood_attack(args.duration, args.rate)
         elif args.attack == 'dns_amplification': simulator.dns_amplification_attack(args.duration, args.rate)
         elif args.attack == 'botnet': simulator.botnet_simulation(10, args.duration)
